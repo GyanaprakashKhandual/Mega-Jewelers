@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega Jewelers</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <span class="material-icons nav-icon">local_cafe</span>
+            <span class="nav-title">Mega Jewelers</span>
+        </div>
+
+        <div class="nav-center">
+            <div class="search-container">
+                <span class="material-icons search-icon">search</span>
+                <input type="text" class="search-input" placeholder="Search..." />
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <div class="nav-dropdown">
+                <button class="nav-button" id="view-button">
+                    View
+                    <span class="material-icons dropdown-icon">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-menu" id="view-menu">
+                    <button class="dropdown-item">Graph View</button>
+                    <button class="dropdown-item">Table View</button>
+                    <button class="dropdown-item">Card View</button>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-button" id="network-button">
+                    Network Type
+                    <span class="material-icons dropdown-icon">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-menu" id="network-menu">
+                    <button class="dropdown-item">35 Mbps</button>
+                    <button class="dropdown-item">1 Mbps</button>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-button" id="status-button">
+                    Status
+                    <span class="material-icons dropdown-icon">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-menu" id="status-menu">
+                    <button class="dropdown-item">Pass</button>
+                    <button class="dropdown-item">Failed</button>
+                </div>
+            </div>
+
+            <div class="nav-dropdown">
+                <button class="nav-button" id="assertion-button">
+                    Assertion
+                    <span class="material-icons dropdown-icon">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-menu" id="assertion-menu">
+                    <button class="dropdown-item">Pass</button>
+                    <button class="dropdown-item">Failed</button>
+                </div>
+            </div>
+
+            <button class="nav-icon-button" id="theme-toggle">
+                <span class="material-icons">brightness_4</span>
+            </button>
+
+            <button class="nav-icon-button" id="refresh-button">
+                <span class="material-icons">refresh</span>
+            </button>
+        </div>
+    </nav>
+    <div class="content-view">
+        <div class="graph-view hidden" id="graph-view">
+            <!-- Graph view content would go here -->
+            <p>Graph view content</p>
+        </div>
+        <div class="card-view hidden" id="card-view">
+            <!-- Graph view content would go here -->
+            <p>Card View Content view content</p>
+            <div class="card-body">
+                <strong>API Name</strong>
+                <strong>API Link:</strong>
+                <strong>Type of Request:</strong>
+                <strong>Network Type:</strong>
+                <strong>Minimum Response Time:</strong>
+                <strong>Maximum Response Time:</strong>
+                <strong>Medium Response Time:</strong>
+                <strong>Average Response Time:</strong>
+                <strong>Status Code Result:</strong>
+                <strong>Status Pass Rate:</strong>
+                <strong>Assertion Result:</strong>
+                <strong>Assertion Pass Rate:</strong>
+            </div>
+        </div>
+
+        <div class="table-view" id="table-view">
+            <div class="table-container">
+                <table id="data-table">
+                    <thead>
+                        <tr>
+                            <th>Site</th>
+                            <th>Network</th>
+                            <th>Average</th>
+                            <th>Minimum</th>
+                            <th>Medium</th>
+                            <th>Maximum</th>
+                            <th>Status Pass</th>
+                            <th>Status Result</th>
+                            <th>Response Pass</th>
+                            <th>Response Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

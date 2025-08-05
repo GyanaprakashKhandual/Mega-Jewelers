@@ -1,0 +1,167 @@
+[
+  {
+    "name": "site",
+    "tests": [
+      {
+        "network": "Under 35mbps",
+        "metrics": {
+          "duration": {
+            "avg": "502.11ms",
+            "min": "0s",
+            "med": "483.66ms",
+            "max": "3.15s",
+            "p90": "563.39ms",
+            "p95": "597.62ms"
+          },
+          "status": {
+            "passRate": "99%",
+            "passCount": 5506,
+            "failCount": 8,
+            "result": "pass"
+          },
+          "responseTime": {
+            "passRate": "83%",
+            "passCount": 4630,
+            "failCount": 884,
+            "result": "fail"
+          }
+        }
+      },
+      {
+        "network": "Under 1mbps",
+        "metrics": {
+          "duration": {
+            "avg": "13.27s",
+            "min": "0s",
+            "med": "7.21s",
+            "max": "60s",
+            "p90": "43.12s",
+            "p95": "55.19s"
+          },
+          "status": {
+            "passRate": "41%",
+            "passCount": 86,
+            "failCount": 120,
+            "result": "fail"
+          },
+          "responseTime": {
+            "passRate": "44%",
+            "passCount": 92,
+            "failCount": 114,
+            "result": "fail"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "brand",
+    "tests": [
+      {
+        "network": "Under 35mbps",
+        "metrics": {
+          "duration": {
+            "avg": "701.9ms",
+            "min": "0s",
+            "med": "687.06ms",
+            "max": "1.79s",
+            "p90": "754.03ms",
+            "p95": "789.27ms"
+          },
+          "status": {
+            "passRate": "99%",
+            "passCount": 4898,
+            "failCount": 6,
+            "result": "pass"
+          },
+          "responseTime": {
+            "passRate": "0%",
+            "passCount": 6,
+            "failCount": 4898,
+            "result": "fail"
+          }
+        }
+      },
+      {
+        "network": "Under 1mbps",
+        "metrics": {
+          "duration": {
+            "avg": "1.68s",
+            "min": "698.33ms",
+            "med": "1.47s",
+            "max": "6.57s",
+            "p90": "2.1s",
+            "p95": "3.95s"
+          },
+          "status": {
+            "passRate": "0%",
+            "passCount": 0,
+            "failCount": 3329,
+            "result": "fail"
+          },
+          "responseTime": {
+            "passRate": "0%",
+            "passCount": 0,
+            "failCount": 3329,
+            "result": "fail"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "name": "uom",
+    "tests": [
+      {
+        "network": "Under 35mbps",
+        "metrics": {
+          "duration": {
+            "avg": "483.42ms",
+            "min": "0s",
+            "med": "481.13ms",
+            "max": "1.26s",
+            "p90": "493.06ms",
+            "p95": "498.8ms"
+          },
+          "status": {
+            "passRate": "99%",
+            "passCount": 5341,
+            "failCount": 21,
+            "result": "pass"
+          },
+          "responseTime": {
+            "passRate": "95%",
+            "passCount": 5108,
+            "failCount": 254,
+            "result": "pass"
+          }
+        }
+      },
+      {
+        "network": "Under 1mbps",
+        "metrics": {
+          "duration": {
+            "avg": "9.1s",
+            "min": "0s",
+            "med": "4.52s",
+            "max": "60s",
+            "p90": "24.9s",
+            "p95": "45.69s"
+          },
+          "status": {
+            "passRate": "85%",
+            "passCount": 455,
+            "failCount": 76,
+            "result": "fail"
+          },
+          "responseTime": {
+            "passRate": "9%",
+            "passCount": 49,
+            "failCount": 482,
+            "result": "fail"
+          }
+        }
+      }
+    ]
+  }
+]
