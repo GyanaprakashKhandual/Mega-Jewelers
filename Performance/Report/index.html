@@ -7,6 +7,7 @@
     <title>Mega Jewelers</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -15,12 +16,14 @@
         <div class="nav-left">
             <span class="material-icons nav-icon">local_cafe</span>
             <span class="nav-title">Mega Jewelers</span>
+            <button class="nav-button" id="home-button">Home</button>
+            <button class="nav-button" id="document-button">Document</button>
         </div>
 
         <div class="nav-center">
             <div class="search-container">
                 <span class="material-icons search-icon">search</span>
-                <input type="text" class="search-input" placeholder="Search..." />
+                <input type="text" class="search-input" placeholder="Search..." id="search-input" />
             </div>
         </div>
 
@@ -31,7 +34,6 @@
                     <span class="material-icons dropdown-icon">arrow_drop_down</span>
                 </button>
                 <div class="dropdown-menu" id="view-menu">
-                    <button class="dropdown-item">Graph View</button>
                     <button class="dropdown-item">Table View</button>
                     <button class="dropdown-item">Card View</button>
                 </div>
@@ -74,40 +76,90 @@
                 <span class="material-icons">brightness_4</span>
             </button>
 
-            <button class="nav-icon-button" id="refresh-button">
-                <span class="material-icons">refresh</span>
-            </button>
+            <div class="pagination-controls">
+                <button class="nav-icon-button" id="prev-page">
+                    <span class="material-icons">chevron_left</span>
+                </button>
+                <span id="page-info">Page 1</span>
+                <button class="nav-icon-button" id="next-page">
+                    <span class="material-icons">chevron_right</span>
+                </button>
+            </div>
         </div>
     </nav>
+
     <div class="content-view">
-        <div class="graph-view hidden" id="graph-view">
-            <!-- Graph view content would go here -->
-            <p>Graph view content</p>
-        </div>
-        <div class="card-view hidden" id="card-view">
-            <!-- Graph view content would go here -->
-            <p>Card View Content view content</p>
-            <div class="card-body">
-                <strong>API Name</strong>
-                <strong>API Link:</strong>
-                <strong>Type of Request:</strong>
-                <strong>Network Type:</strong>
-                <strong>Minimum Response Time:</strong>
-                <strong>Maximum Response Time:</strong>
-                <strong>Medium Response Time:</strong>
-                <strong>Average Response Time:</strong>
-                <strong>Status Code Result:</strong>
-                <strong>Status Pass Rate:</strong>
-                <strong>Assertion Result:</strong>
-                <strong>Assertion Pass Rate:</strong>
+        <!-- Home View -->
+        <div class="home-view hidden" id="home-view">
+            <div class="summary-container">
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <h3>Total APIs</h3>
+                        <p id="total-apis">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Passed Tests</h3>
+                        <p id="passed-tests">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Failed Tests</h3>
+                        <p id="failed-tests">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Avg Response Time</h3>
+                        <p id="avg-response">0 ms</p>
+                    </div>
+                </div>
+                <div class="recent-tests">
+                    <h3>Recent Test Results</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>API Name</th>
+                                <th>Network</th>
+                                <th>Status</th>
+                                <th>Response Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="summary-table-body">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
+        <!-- Document View -->
+        <div class="document-view hidden" id="document-view">
+            <h2>API Documentation</h2>
+            <div class="api-docs" id="api-docs">
+                <!-- Documentation will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Graph View -->
+        <div class="graph-view hidden" id="graph-view">
+            <div class="chart-container">
+                <canvas id="responseTimeChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Card View -->
+        <div class="card-view hidden" id="card-view">
+            <div class="cards-container" id="cards-container">
+                <!-- Cards will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Table View -->
         <div class="table-view" id="table-view">
             <div class="table-container">
                 <table id="data-table">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Site</th>
                             <th>Network</th>
                             <th>Average</th>
