@@ -1,0 +1,72 @@
+[
+  {
+    "url": "https://api.megajewelers.com/auth/login",
+    "method": "POST",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/auth/login"
+  },
+  {
+    "url": "https://api.megajewelers.com/auth/register",
+    "method": "POST",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/auth/register"
+  },
+  {
+    "url": "https://api.megajewelers.com/products",
+    "method": "GET",
+    "securityCheck": "No",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/products"
+  },
+  {
+    "url": "https://api.megajewelers.com/products/add",
+    "method": "POST",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/products/add"
+  },
+  {
+    "url": "https://api.megajewelers.com/products/1234",
+    "method": "GET",
+    "securityCheck": "No",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/products/1234"
+  },
+  {
+    "url": "https://api.megajewelers.com/orders",
+    "method": "GET",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/orders"
+  },
+  {
+    "url": "https://api.megajewelers.com/orders/submit",
+    "method": "POST",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/orders/submit"
+  },
+  {
+    "url": "https://api.megajewelers.com/users/profile",
+    "method": "GET",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/users/profile"
+  },
+  {
+    "url": "https://api.megajewelers.com/reviews/submit",
+    "method": "POST",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/reviews/submit"
+  },
+  {
+    "url": "https://api.megajewelers.com/admin/reports",
+    "method": "GET",
+    "securityCheck": "Yes",
+    "functionalCheck": "Yes",
+    "reportLink": "https://reports.megajewelers.com/admin/reports"
+  }
+]

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>API Document Viewer</title>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1><span class="material-icons">api</span> API Documentation</h1>
+    <p>All APIs From Mega Jewelers Production Web Application<code>with Security and Functional Check</code></p>
+  </header>
+
+  <main id="api-container">
+    <!-- Cards will be rendered here -->
+  </main>
+
+  <script>
+    const container = document.getElementById("api-container");
+
+
+    // Function to render API cards
+    function renderApiCards(data) {
+      container.innerHTML = '';
+      
+      data.forEach((api, index) => {
+        const card = document.createElement("div");
+        card.className = "api-card";
+
+        // Get method class for styling
+        const methodClass = api.method.toLowerCase();
+        
+        card.innerHTML = `
+          <h2>${api.url}</h2>
+          <div class="api-details">
+            <span><strong>Method:</strong> <span class="method ${methodClass}">${api.method}</span></span>
+            <span><strong>Security Check:</strong> <span class="status ${api.securityCheck.toLowerCase()}">${api.securityCheck}</span></span>
+            <span><strong>Functional Check:</strong> <span class="status ${api.functionalCheck.toLowerCase()}">${api.functionalCheck}</span></span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Try to fetch real data, fall back to mock data if fails
+    fetch("../data/API.json")
+      .then((res) => res.json())
+      .then((data) => renderApiCards(data))
+      .catch((err) => {
+        console.error("Failed to load API data, using mock data:", err);
+        renderApiCards(mockData);
+      });
+  </script>
+</body>
+</html>
