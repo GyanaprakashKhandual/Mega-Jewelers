@@ -1,143 +1,53 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home, 
   PlayCircle, 
   BookOpen, 
   Component, 
   FileText, 
-  Users, 
-  Building, 
-  Settings, 
-  Shield, 
-  Key, 
-  Zap, 
-  Moon, 
-  Sun,
-  Search,
-  ChevronRight,
-  Database,
-  Palette,
-  Smartphone,
-  Code,
-  Layers,
-  Globe,
-  Terminal
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 import { FaCoffee } from 'react-icons/fa';
 
-// Component imports
-const HomeContent = () => (
+const GoogleArrowDown = () => {
+  return(
+    <svg width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Dropdown arrow" xmlns="http://www.w3.org/2000/svg">
+  <title>Dropdown arrow</title>
+  <path d="M7 10l5 5 5-5z" fill="currentColor"/>
+</svg>
+
+  )
+}
+
+// Test Phase Components
+const TestPhaseOneManual = () => (
   <div>
-    <h2 className="text-2xl font-bold mb-4">Welcome to Rabit Documentation</h2>
-    <p>Select an item from the sidebar to get started.</p>
+    <h2 className="text-2xl font-bold mb-4">Test Phase 1 Manual</h2>
+    <p>This is the content for Test Phase 1 Manual testing.</p>
   </div>
 );
 
-const GettingStarted = () => (
+const TestPhaseTwoManual = () => (
   <div>
-    <h2 className="text-2xl font-bold mb-4">Getting Started</h2>
-    <div className="space-y-4">
-      <p>To get started with Rabit, follow these steps:</p>
-      <ol className="list-decimal pl-6 space-y-2">
-        <li>Create an account on our platform</li>
-        <li>Install the Rabit SDK</li>
-        <li>Configure your application</li>
-        <li>Implement authentication</li>
-        <li>Deploy your application</li>
-      </ol>
-    </div>
+    <h2 className="text-2xl font-bold mb-4">Test Phase 2 Manual</h2>
+    <p>This is the content for Test Phase 2 Manual testing.</p>
   </div>
 );
 
-const Guides = () => (
+const TestPhaseOneAuto = () => (
   <div>
-    <h2 className="text-2xl font-bold mb-4">Guides</h2>
-    <div className="space-y-4">
-      <div className="p-4 border rounded-lg">
-        <h3 className="font-semibold mb-2">Authentication Guide</h3>
-        <p>Learn how to implement secure authentication in your application.</p>
-      </div>
-      <div className="p-4 border rounded-lg">
-        <h3 className="font-semibold mb-2">API Integration</h3>
-        <p>Step-by-step guide to integrating with our API.</p>
-      </div>
-      <div className="p-4 border rounded-lg">
-        <h3 className="font-semibold mb-2">Performance Optimization</h3>
-        <p>Tips and tricks to optimize your Rabit implementation.</p>
-      </div>
-    </div>
+    <h2 className="text-2xl font-bold mb-4">Test Phase 1 Automation</h2>
+    <p>This is the content for Test Phase 1 Automation testing.</p>
   </div>
 );
 
-const Reports = () => (
+const TestPhaseTwoAuto = () => (
   <div>
-    <h2 className="text-2xl font-bold mb-4">Reports</h2>
-    <p>View and analyze your application's performance metrics.</p>
-  </div>
-);
-
-const WorkFlow = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Work Flow</h2>
-    <p>Understand the Rabit work flow and best practices.</p>
-  </div>
-);
-
-const Introduction = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Introduction</h2>
-    <p>Learn about the core concepts of Rabit.</p>
-  </div>
-);
-
-const Extension = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Extension</h2>
-    <p>Extend Rabit's functionality with our extension system.</p>
-  </div>
-);
-
-const Connection = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Connection</h2>
-    <p>Connect your services with Rabit's integration platform.</p>
-  </div>
-);
-
-const NetworkAccess = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Network Access</h2>
-    <p>Configure network access and security settings.</p>
-  </div>
-);
-
-const Security = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Security at Rabit</h2>
-    <p>Learn about Rabit's security measures and best practices.</p>
-  </div>
-);
-
-const FrontendAPI = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Frontend API</h2>
-    <p>Documentation for Rabit's frontend API.</p>
-  </div>
-);
-
-const BackendAPI = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Backend API</h2>
-    <p>Documentation for Rabit's backend API.</p>
-  </div>
-);
-
-const BackendSDK = () => (
-  <div>
-    <h2 className="text-2xl font-bold mb-4">Backend SDK</h2>
-    <p>Documentation for Rabit's backend SDK.</p>
+    <h2 className="text-2xl font-bold mb-4">Test Phase 2 Automation</h2>
+    <p>This is the content for Test Phase 2 Automation testing.</p>
   </div>
 );
 
@@ -145,6 +55,7 @@ const RabitDocumentation = () => {
   const [theme, setTheme] = useState('light');
   const [searchQuery, setSearchQuery] = useState('');
   const [activeContent, setActiveContent] = useState('Home');
+  const [expandedItems, setExpandedItems] = useState({});
   const [searchResults, setSearchResults] = useState([]);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -211,6 +122,22 @@ const RabitDocumentation = () => {
       active: 'bg-amber-200 text-amber-900',
       input: 'bg-white border-amber-300 text-amber-900 placeholder-amber-600 focus:border-amber-500',
       button: 'hover:bg-amber-200 text-amber-800'
+    },
+    coffee: {
+      bg: 'bg-stone-100',
+      sidebar: 'bg-stone-200 border-stone-300',
+      header: 'bg-stone-200 border-stone-300',
+      card: 'bg-stone-50 border-stone-300',
+      text: {
+        primary: 'text-stone-900',
+        secondary: 'text-stone-800',
+        tertiary: 'text-stone-700',
+        muted: 'text-stone-600'
+      },
+      hover: 'hover:bg-stone-300',
+      active: 'bg-stone-300 text-stone-900',
+      input: 'bg-stone-50 border-stone-400 text-stone-900 placeholder-stone-600 focus:border-stone-600',
+      button: 'hover:bg-stone-300 text-stone-800'
     }
   };
 
@@ -218,31 +145,56 @@ const RabitDocumentation = () => {
 
   const sidebarItems = [
     { icon: Home, label: 'Home', component: 'Home' },
-    { icon: PlayCircle, label: 'Getting started', component: 'GettingStarted' },
-    { icon: BookOpen, label: 'Guides', component: 'Guides' },
-    { icon: Component, label: 'Reports', component: 'Reports' },
-    { icon: FileText, label: 'Work Flow', component: 'WorkFlow' }
-  ];
-
-  const coreConceptsItems = [
-    { icon: Zap, label: 'Introduction', component: 'Introduction' },
-    { icon: Users, label: 'Extension', component: 'Extension' },
-    { icon: Building, label: 'Connection', component: 'Connection' },
-    { icon: Settings, label: 'Network Access', component: 'NetworkAccess' },
-    { icon: Shield, label: 'Security at Rabit', component: 'Security' },
-  ];
-
-  const referenceItems = [
-    { label: 'Frontend API', component: 'FrontendAPI' },
-    { label: 'Backend API', component: 'BackendAPI' },
-    { label: 'Backend SDK', component: 'BackendSDK' }
+    { icon: PlayCircle, label: 'Manual Reports', component: 'ManualReports', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' },
+      { label: 'Test Phase 2', component: 'TestPhaseTwoManual' }
+    ]},
+    { icon: BookOpen, label: 'Automation Result', component: 'AutomationResult', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneAuto' },
+      { label: 'Test Phase 2', component: 'TestPhaseTwoAuto' }
+    ]},
+    { icon: Component, label: 'API Test Reports', component: 'APIs', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: FileText, label: 'Performance Test Report', component: 'Performance', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: Home, label: 'Database Test Report', component: 'Database', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: PlayCircle, label: 'Security Test Report', component: 'Security', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: BookOpen, label: 'Automation Test Codes', component: 'Links', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: Component, label: 'API Test Codes', component: 'Code', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: FileText, label: 'Perfromace Test Codes', component: 'Repo', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: FileText, label: 'Overall Test Graphs', component: 'Repo', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: FileText, label: 'Project Issue Tracking', component: 'Repo', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]},
+    { icon: FileText, label: 'Project Conclusion', component: 'Repo', testPhases: [
+      { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
+    ]}
   ];
 
   const allContentItems = [
-    ...sidebarItems,
-    ...coreConceptsItems,
-    ...referenceItems
+    ...sidebarItems
   ];
+
+  const toggleItemExpansion = (itemLabel) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [itemLabel]: !prev[itemLabel]
+    }));
+  };
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -263,33 +215,27 @@ const RabitDocumentation = () => {
   const renderContent = () => {
     switch (activeContent) {
       case 'Home':
-        return <HomeContent />;
-      case 'GettingStarted':
-        return <GettingStarted />;
-      case 'Guides':
-        return <Guides />;
-      case 'Reports':
-        return <Reports />;
-      case 'WorkFlow':
-        return <WorkFlow />;
-      case 'Introduction':
-        return <Introduction />;
-      case 'Extension':
-        return <Extension />;
-      case 'Connection':
-        return <Connection />;
-      case 'NetworkAccess':
-        return <NetworkAccess />;
-      case 'Security':
-        return <Security />;
-      case 'FrontendAPI':
-        return <FrontendAPI />;
-      case 'BackendAPI':
-        return <BackendAPI />;
-      case 'BackendSDK':
-        return <BackendSDK />;
+        return (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">Welcome to Rabit Documentation</h2>
+            <p>Select an item from the sidebar to get started.</p>
+          </div>
+        );
+      case 'TestPhaseOneManual':
+        return <TestPhaseOneManual />;
+      case 'TestPhaseTwoManual':
+        return <TestPhaseTwoManual />;
+      case 'TestPhaseOneAuto':
+        return <TestPhaseOneAuto />;
+      case 'TestPhaseTwoAuto':
+        return <TestPhaseTwoAuto />;
       default:
-        return <HomeContent />;
+        return (
+          <div>
+            <h2 className="text-2xl font-bold mb-4">{activeContent}</h2>
+            <p>This is the default content for {activeContent}.</p>
+          </div>
+        );
     }
   };
 
@@ -314,6 +260,24 @@ const RabitDocumentation = () => {
     }
   };
 
+  const subItemVariants = {
+    hidden: { opacity: 0, height: 0 },
+    visible: {
+      opacity: 1,
+      height: 'auto',
+      transition: {
+        duration: 0.3
+      }
+    },
+    exit: {
+      opacity: 0,
+      height: 0,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
   return (
     <div className={`min-h-screen flex ${currentTheme.bg}`}>
       {/* Sidebar */}
@@ -325,97 +289,87 @@ const RabitDocumentation = () => {
         {/* Logo */}
         <div className="p-[20px]">
           <div className="flex items-center space-x-2">
-            <div className={`w-8 h-8 ${theme === 'brown' ? 'bg-gradient-to-br from-amber-500 to-orange-600' : 'bg-gradient-to-br from-blue-500 to-purple-600'} rounded-lg flex items-center justify-center`}>
+            <div className={`w-8 h-8 ${
+              theme === 'brown' ? 'bg-gradient-to-br from-amber-500 to-orange-600' : 
+              theme === 'coffee' ? 'bg-gradient-to-br from-amber-700 to-stone-800' :
+              'bg-gradient-to-br from-blue-500 to-purple-600'
+            } rounded-lg flex items-center justify-center`}>
               <FaCoffee className="w-5 h-5 text-white" />
             </div>
-            <span className={`text-xl font-bold ${currentTheme.text.primary}`}>Rabit</span>
-            <span className={`text-sm ${currentTheme.text.tertiary}`}>Docs</span>
+            <span className={`text-xl font-bold ${currentTheme.text.primary}`}>Mega Jewelers</span>
           </div>
         </div>
 
         {/* Navigation */}
         <div className="flex-1 overflow-y-auto">
-          <div className="p-4 space-y-2">
+          <div className="p-4 space-y-1">
             {sidebarItems.map((item, index) => (
-              <motion.div
-                key={item.label}
-                variants={itemVariants}
-                initial="hidden"
-                animate="visible"
-                transition={{ delay: index * 0.1 }}
-                onClick={() => {
-                  setActiveContent(item.component);
-                  setShowSearchResults(false);
-                }}
-                className={`flex items-center space-x-3 px-3 py-2 rounded-lg cursor-pointer transition-colors ${
-                  activeContent === item.component
-                    ? currentTheme.active
-                    : `${currentTheme.text.secondary} ${currentTheme.hover}`
-                }`}
-              >
-                <item.icon className="w-5 h-5" />
-                <span className="text-sm font-medium">{item.label}</span>
-              </motion.div>
+              <div key={item.label} className="space-y-1">
+                <motion.div
+                  variants={itemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: index * 0.1 }}
+                  onClick={() => {
+                    if (item.testPhases) {
+                      toggleItemExpansion(item.label);
+                    } else {
+                      setActiveContent(item.component);
+                    }
+                    setShowSearchResults(false);
+                  }}
+                  className={`flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer transition-colors ${
+                    activeContent === item.component || expandedItems[item.label]
+                      ? currentTheme.active
+                      : `${currentTheme.text.secondary} ${currentTheme.hover}`
+                  }`}
+                >
+                  <div className="flex items-center space-x-3">
+                    <item.icon className="w-5 h-5" />
+                    <span className="text-sm font-medium">{item.label}</span>
+                  </div>
+                  {item.testPhases && (
+                    <GoogleArrowDown
+                      className={`w-4 h-4 transition-transform ${
+                        expandedItems[item.label] ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
+                </motion.div>
+                
+                {/* Test Phase Sub-items */}
+                {item.testPhases && (
+                  <AnimatePresence>
+                    {expandedItems[item.label] && (
+                      <motion.div
+                        variants={subItemVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        className="pl-8 space-y-1"
+                      >
+                        {item.testPhases.map((phase, phaseIndex) => (
+                          <motion.div
+                            key={phase.label}
+                            onClick={() => {
+                              setActiveContent(phase.component);
+                              setShowSearchResults(false);
+                            }}
+                            className={`px-3 py-2 rounded-lg cursor-pointer transition-colors text-sm ${
+                              activeContent === phase.component
+                                ? currentTheme.active
+                                : `${currentTheme.text.secondary} ${currentTheme.hover}`
+                            }`}
+                          >
+                            {phase.label}
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                )}
+              </div>
             ))}
-          </div>
-
-          {/* Core Concepts */}
-          <div className="px-4 py-2">
-            <h3 className={`text-xs font-semibold uppercase tracking-wider ${currentTheme.text.muted} mb-3`}>
-              Core concepts
-            </h3>
-            <div className="space-y-1">
-              {coreConceptsItems.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: (index + 5) * 0.1 }}
-                  onClick={() => {
-                    setActiveContent(item.component);
-                    setShowSearchResults(false);
-                  }}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg cursor-pointer transition-colors ${
-                    activeContent === item.component
-                      ? currentTheme.active
-                      : `${currentTheme.text.secondary} ${currentTheme.hover}`
-                  }`}
-                >
-                  <item.icon className="w-4 h-4" />
-                  <span className="text-sm">{item.label}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Reference */}
-          <div className="px-4 py-2">
-            <h3 className={`text-xs font-semibold uppercase tracking-wider ${currentTheme.text.muted} mb-3`}>
-              Reference
-            </h3>
-            <div className="space-y-1">
-              {referenceItems.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  variants={itemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: (index + 11) * 0.1 }}
-                  onClick={() => {
-                    setActiveContent(item.component);
-                    setShowSearchResults(false);
-                  }}
-                  className={`px-3 py-2 rounded-lg cursor-pointer transition-colors ${
-                    activeContent === item.component
-                      ? currentTheme.active
-                      : `${currentTheme.text.secondary} ${currentTheme.hover}`
-                  }`}
-                >
-                  <span className="text-sm">{item.label}</span>
-                </motion.div>
-              ))}
-            </div>
           </div>
         </div>
       </motion.div>
@@ -431,7 +385,6 @@ const RabitDocumentation = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4 flex-1 max-w-2xl">
               <div className="relative flex-1">
-                <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${currentTheme.text.muted}`} />
                 <input
                   type="text"
                   placeholder="Search documentation"
@@ -484,7 +437,7 @@ const RabitDocumentation = () => {
                   }`}
                   title="Light theme"
                 >
-                  <Sun className="w-4 h-4 text-gray-600" />
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-blue-400 to-blue-600"></div>
                 </button>
                 <button
                   onClick={() => setTheme('dark')}
@@ -493,7 +446,7 @@ const RabitDocumentation = () => {
                   }`}
                   title="Dark theme"
                 >
-                  <Moon className="w-4 h-4 text-gray-600" />
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-gray-600 to-gray-900"></div>
                 </button>
                 <button
                   onClick={() => setTheme('brown')}
@@ -504,10 +457,18 @@ const RabitDocumentation = () => {
                 >
                   <div className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-500 to-orange-600"></div>
                 </button>
+                <button
+                  onClick={() => setTheme('coffee')}
+                  className={`p-2 rounded-md transition-colors ${
+                    theme === 'coffee' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                  }`}
+                  title="Coffee theme"
+                >
+                  <div className="w-4 h-4 rounded-full bg-gradient-to-br from-amber-700 to-stone-800"></div>
+                </button>
               </div>
               <button className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${currentTheme.button}`}>
-                <span>Sign in</span>
-                <ChevronRight className="w-4 h-4" />
+                <span>Logged In</span>
               </button>
             </div>
           </div>
