@@ -177,7 +177,7 @@ const RabitDocumentation = () => {
     { icon: FileText, label: 'Overall Test Graphs', component: 'Repo', testPhases: [
       { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
     ]},
-    { icon: FileText, label: 'Project Issue Tracking', component: 'Repo', testPhases: [
+    { icon: FileText, label: 'Project Issue Track', component: 'Repo', testPhases: [
       { label: 'Test Phase 1', component: 'TestPhaseOneManual' }
     ]},
     { icon: FileText, label: 'Project Conclusion', component: 'Repo', testPhases: [
