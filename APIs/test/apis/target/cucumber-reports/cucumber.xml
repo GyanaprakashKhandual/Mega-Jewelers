@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="3.321" tests="1" skipped="0" failures="0" errors="0">
+<testcase classname="Login API Testing" name="Verify login API with valid credentials" time="3.108">
+<system-out><![CDATA[
+Given I set the login API endpoint..........................................passed
+When I send a POST request with email "gyanaprakashkhnadual@gmail.com" and password "Gyana@123".passed
+Then the response status code should be 200.................................passed
+And the response should contain a token.....................................passed
+]]></system-out>
+</testcase>
+</testsuite>
