@@ -1,0 +1,92 @@
+[
+  {
+    "apiName": "Role",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Product Category Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-categories?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Product Category",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-categories",
+    "requestMethod": "POST",
+    "statusCode": "201 Created"
+  },
+  {
+    "apiName": "Group Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-codes/grouped?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Product",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/products",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Bulk",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-codes/bulk",
+    "requestMethod": "POST",
+    "statusCode": "201 Created"
+  },
+  {
+    "apiName": "Tray Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/tray?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Tray",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/tray",
+    "requestMethod": "POST",
+    "statusCode": "201 Created"
+  },
+  {
+    "apiName": "Inventory Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/inventory?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Items",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/items",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Vendors",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/vendors",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Customer Maintenance",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/customer-maintenance",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Order Voucher Page Limit",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/order-vouchers?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Sales Person Allocation Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/sales-person-allocations?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Vendor Page Limit",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/vendors?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  }
+]
