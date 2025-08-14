@@ -370,7 +370,7 @@
       // Fetch and display API data
       async function loadAPIData() {
         try {
-          const response = await fetch("./API.json");
+          const response = await fetch("../data/API.json");
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }

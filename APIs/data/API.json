@@ -1,72 +1,92 @@
 [
   {
-    "url": "https://api.megajewelers.com/auth/login",
-    "method": "POST",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/auth/login"
+    "apiName": "Role",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   },
   {
-    "url": "https://api.megajewelers.com/auth/register",
-    "method": "POST",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/auth/register"
+    "apiName": "Product Category Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-categories?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   },
   {
-    "url": "https://api.megajewelers.com/products",
-    "method": "GET",
-    "securityCheck": "No",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/products"
+    "apiName": "Product Category",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-categories",
+    "requestMethod": "POST",
+    "statusCode": "201 Created"
   },
   {
-    "url": "https://api.megajewelers.com/products/add",
-    "method": "POST",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/products/add"
+    "apiName": "Group Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-codes/grouped?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   },
   {
-    "url": "https://api.megajewelers.com/products/1234",
-    "method": "GET",
-    "securityCheck": "No",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/products/1234"
+    "apiName": "Product",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/products",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   },
   {
-    "url": "https://api.megajewelers.com/orders",
-    "method": "GET",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/orders"
+    "apiName": "Bulk",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-codes/bulk",
+    "requestMethod": "POST",
+    "statusCode": "201 Created"
   },
   {
-    "url": "https://api.megajewelers.com/orders/submit",
-    "method": "POST",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/orders/submit"
+    "apiName": "Tray Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/tray?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   },
   {
-    "url": "https://api.megajewelers.com/users/profile",
-    "method": "GET",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/users/profile"
+    "apiName": "Tray",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/tray",
+    "requestMethod": "POST",
+    "statusCode": "201 Created"
   },
   {
-    "url": "https://api.megajewelers.com/reviews/submit",
-    "method": "POST",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/reviews/submit"
+    "apiName": "Inventory Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/inventory?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   },
   {
-    "url": "https://api.megajewelers.com/admin/reports",
-    "method": "GET",
-    "securityCheck": "Yes",
-    "functionalCheck": "Yes",
-    "reportLink": "https://reports.megajewelers.com/admin/reports"
+    "apiName": "Items",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/items",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Vendors",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/vendors",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Customer Maintenance",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/customer-maintenance",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Order Voucher Page Limit",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/order-vouchers?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Sales Person Allocation Page",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/sales-person-allocations?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
+  },
+  {
+    "apiName": "Vendor Page Limit",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/vendors?page=1&limit=10",
+    "requestMethod": "GET",
+    "statusCode": "200 OK"
   }
 ]
