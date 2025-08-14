@@ -1,382 +1,397 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>API Dashboard</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      /* Chrome/Edge/Safari */
+      ::-webkit-scrollbar-button {
+        display: none; /* hides arrow buttons */
+      }
+
+      /* Optional: keep rest of scrollbar visible */
+      ::-webkit-scrollbar {
+        width: 5px; /* set scrollbar width */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #888;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        min-height: 100vh;
+        padding: 10px;
+        font-size: 11px;
+      }
+
+      .container {
+        max-width: 100vw;
+        margin: 0 auto;
+      }
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        color: #4a5568;
+        font-size: 0.9rem;
+      }
+
+      .spinner {
+        border: 3px solid rgba(113, 128, 150, 0.3);
+        border-radius: 50%;
+        border-top: 3px solid #4a5568;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin-right: 15px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-        /* Chrome/Edge/Safari */
-::-webkit-scrollbar-button {
-  display: none; /* hides arrow buttons */
-}
-
-/* Optional: keep rest of scrollbar visible */
-::-webkit-scrollbar {
-  width: 5px; /* set scrollbar width */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-}
-
-
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            min-height: 100vh;
-            padding: 10px;
-            font-size: 11px;
+        100% {
+          transform: rotate(360deg);
         }
+      }
 
-        .container {
-            max-width: 100vw;
-            margin: 0 auto;
-        }
-        .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            color: #4a5568;
-            font-size: 0.9rem;
-        }
+      .api-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 25px;
+      }
 
-        .spinner {
-            border: 3px solid rgba(113, 128, 150, 0.3);
-            border-radius: 50%;
-            border-top: 3px solid #4a5568;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-right: 15px;
-        }
+      .api-card {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.01);
+        transition: all 0.3s ease;
+        border: 1px solid #e2e8f0;
+      }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+      .api-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+      }
 
+      .api-icon {
+        background: #f1f5f9;
+        color: #64748b;
+        border-radius: 6px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+      }
+
+      .api-title {
+        color: #2d3748;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .api-details {
+        space-y: 15px;
+      }
+
+      .detail-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        padding: 6px;
+        background: #f8fafc;
+        border-radius: 4px;
+        transition: background 0.2s ease;
+      }
+
+      .detail-row:hover {
+        background: #f1f5f9;
+      }
+
+      .detail-icon {
+        color: #64748b;
+        margin-right: 6px;
+        font-size: 14px;
+      }
+
+      .detail-label {
+        font-weight: 500;
+        color: #4a5568;
+        min-width: 50px;
+        margin-right: 8px;
+        font-size: 0.75rem;
+      }
+
+      .detail-value {
+        flex: 1;
+        color: #2d3748;
+        font-family: "Monaco", "Consolas", monospace;
+        font-size: 0.7rem;
+      }
+
+      .method-badge {
+        padding: 2px 6px;
+        border-radius: 12px;
+        font-size: 0.65rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .method-get {
+        background: #48bb78;
+        color: white;
+      }
+
+      .method-post {
+        background: #ed8936;
+        color: white;
+      }
+
+      .method-put {
+        background: #4299e1;
+        color: white;
+      }
+
+      .method-delete {
+        background: #f56565;
+        color: white;
+      }
+
+      .status-badge {
+        padding: 2px 6px;
+        border-radius: 12px;
+        font-size: 0.65rem;
+        font-weight: 500;
+      }
+
+      .status-success {
+        background: #c6f6d5;
+        color: #22543d;
+      }
+
+      .status-error {
+        background: #fed7d7;
+        color: #742a2a;
+      }
+
+      .clickable-url {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        padding: 4px;
+        border-radius: 3px;
+        margin: -4px;
+      }
+
+      .copy-icon {
+        margin-left: 8px;
+        opacity: 0.6;
+        transition: opacity 0.2s ease;
+      }
+
+      .clickable-url:hover .copy-icon {
+        opacity: 1;
+      }
+
+      /* Custom Alert Styles */
+      .alert-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .alert-box {
+        position: fixed;
+        top: 80%;
+        left: 90%;
+        transform: translate(-50%, -50%) scale(0.7);
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+        min-width: 280px;
+        z-index: 1001;
+        animation: alertSlideIn 0.3s ease forwards;
+        border: 1px solid #e2e8f0;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes alertSlideIn {
+        from {
+          transform: translate(-50%, -50%) scale(0.7);
+          opacity: 0;
+        }
+        to {
+          transform: translate(-50%, -50%) scale(1);
+          opacity: 1;
+        }
+      }
+
+      .alert-icon {
+        background: #f0f9ff;
+        color: #0369a1;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+        font-size: 18px;
+      }
+
+      .alert-title {
+        color: #2d3748;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .alert-message {
+        color: #4a5568;
+        margin-bottom: 16px;
+        line-height: 1.4;
+        font-size: 0.75rem;
+      }
+
+      .alert-button {
+        background: #e2e8f0;
+        color: #2d3748;
+        border: none;
+        padding: 6px 16px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      .alert-button:hover {
+        background: #cbd5e0;
+      }
+
+      .error-message {
+        color: #4a5568;
+        text-align: center;
+        background: #fef2f2;
+        padding: 16px;
+        border-radius: 6px;
+        border: 1px solid #fecaca;
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 768px) {
         .api-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
+          grid-template-columns: 1fr;
         }
 
-        .api-card {
-            background: white;
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.01);
-            transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
-        }
-
-        .api-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-
-        .api-icon {
-            background: #f1f5f9;
-            color: #64748b;
-            border-radius: 6px;
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-
-        .api-title {
-            color: #2d3748;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .api-details {
-            space-y: 15px;
-        }
-
-        .detail-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            padding: 6px;
-            background: #f8fafc;
-            border-radius: 4px;
-            transition: background 0.2s ease;
-        }
-
-        .detail-row:hover {
-            background: #f1f5f9;
-        }
-
-        .detail-icon {
-            color: #64748b;
-            margin-right: 6px;
-            font-size: 14px;
-        }
-
-        .detail-label {
-            font-weight: 500;
-            color: #4a5568;
-            min-width: 50px;
-            margin-right: 8px;
-            font-size: 0.75rem;
-        }
-
-        .detail-value {
-            flex: 1;
-            color: #2d3748;
-            font-family: 'Monaco', 'Consolas', monospace;
-            font-size: 0.7rem;
-        }
-
-        .method-badge {
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .method-get {
-            background: #48bb78;
-            color: white;
-        }
-
-        .method-post {
-            background: #ed8936;
-            color: white;
-        }
-
-        .method-put {
-            background: #4299e1;
-            color: white;
-        }
-
-        .method-delete {
-            background: #f56565;
-            color: white;
-        }
-
-        .status-badge {
-            padding: 2px 6px;
-            border-radius: 12px;
-            font-size: 0.65rem;
-            font-weight: 500;
-        }
-
-        .status-success {
-            background: #c6f6d5;
-            color: #22543d;
-        }
-
-        .status-error {
-            background: #fed7d7;
-            color: #742a2a;
-        }
-
-        .clickable-url {
-            cursor: pointer;
-            transition: all 0.2s ease;
-            padding: 4px;
-            border-radius: 3px;
-            margin: -4px;
-        }
-
-        .copy-icon {
-            margin-left: 8px;
-            opacity: 0.6;
-            transition: opacity 0.2s ease;
-        }
-
-        .clickable-url:hover .copy-icon {
-            opacity: 1;
-        }
-
-        /* Custom Alert Styles */
-        .alert-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.1);
-            display: none;
-            z-index: 1000;
-            animation: fadeIn 0.3s ease;
+        .header h1 {
+          font-size: 1.3rem;
         }
 
         .alert-box {
-            position: fixed;
-            top: 80%;
-            left: 90%;
-            transform: translate(-50%, -50%) scale(0.7);
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            text-align: center;
-            min-width: 280px;
-            z-index: 1001;
-            animation: alertSlideIn 0.3s ease forwards;
-            border: 1px solid #e2e8f0;
+          min-width: 240px;
+          margin: 0 20px;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes alertSlideIn {
-            from { 
-                transform: translate(-50%, -50%) scale(0.7);
-                opacity: 0;
-            }
-            to { 
-                transform: translate(-50%, -50%) scale(1);
-                opacity: 1;
-            }
-        }
-
-        .alert-icon {
-            background: #f0f9ff;
-            color: #0369a1;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 12px;
-            font-size: 18px;
-        }
-
-        .alert-title {
-            color: #2d3748;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .alert-message {
-            color: #4a5568;
-            margin-bottom: 16px;
-            line-height: 1.4;
-            font-size: 0.75rem;
-        }
-
-        .alert-button {
-            background: #e2e8f0;
-            color: #2d3748;
-            border: none;
-            padding: 6px 16px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-
-        .alert-button:hover {
-            background: #cbd5e0;
-        }
-
-        .error-message {
-            color: #4a5568;
-            text-align: center;
-            background: #fef2f2;
-            padding: 16px;
-            border-radius: 6px;
-            border: 1px solid #fecaca;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .api-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .header h1 {
-                font-size: 1.3rem;
-            }
-            
-            .alert-box {
-                min-width: 240px;
-                margin: 0 20px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        Loading API data...
+      </div>
 
-        <div id="loading" class="loading">
-            <div class="spinner"></div>
-            Loading API data...
-        </div>
+      <div id="apiContainer" class="api-grid" style="display: none">
+        <!-- API cards will be populated here -->
+      </div>
 
-        <div id="apiContainer" class="api-grid" style="display: none;">
-            <!-- API cards will be populated here -->
-        </div>
-
-        <div id="errorContainer" style="display: none;">
-            <!-- Error messages will be shown here -->
-        </div>
+      <div id="errorContainer" style="display: none">
+        <!-- Error messages will be shown here -->
+      </div>
     </div>
 
     <!-- Custom Alert -->
     <div id="alertOverlay" class="alert-overlay">
-        <div class="alert-box">
-            <div class="alert-icon">
-                <span class="material-icons">check</span>
-            </div>
-            <div class="alert-title">URL Copied!</div>
-            <div class="alert-message">The API URL has been successfully copied to your clipboard.</div>
-            <button class="alert-button" onclick="closeAlert()">OK</button>
+      <div class="alert-box">
+        <div class="alert-icon">
+          <span class="material-icons">check</span>
         </div>
+        <div class="alert-title">URL Copied!</div>
+        <div class="alert-message">
+          The API URL has been successfully copied to your clipboard.
+        </div>
+        <button class="alert-button" onclick="closeAlert()">OK</button>
+      </div>
     </div>
 
-<script>
-    // Fetch and display API data
-    async function loadAPIData() {
+    <script>
+      // Fetch and display API data
+      async function loadAPIData() {
         try {
-            const response = await fetch('./API.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            displayAPIData(data);
+          const response = await fetch("./API.json");
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          displayAPIData(data);
         } catch (error) {
-            console.error('Error fetching API data:', error);
-            showError(`Failed to load API data: ${error.message}`);
+          console.error("Error fetching API data:", error);
+          showError(`Failed to load API data: ${error.message}`);
         }
-    }
+      }
 
-    function displayAPIData(apiData) {
-        const container = document.getElementById('apiContainer');
-        const loading = document.getElementById('loading');
-        
-        loading.style.display = 'none';
-        container.style.display = 'grid';
-        
-        container.innerHTML = apiData.map(api => `
+      function displayAPIData(apiData) {
+        const container = document.getElementById("apiContainer");
+        const loading = document.getElementById("loading");
+
+        loading.style.display = "none";
+        container.style.display = "grid";
+
+        container.innerHTML = apiData
+          .map(
+            (api) => `
             <div class="api-card">
                 <div class="api-header">
                     <div class="api-icon">
@@ -391,62 +406,71 @@
                         <span class="detail-value clickable-url">
                             ${api.requestUrl}
                             <span class="material-icons copy-icon" style="font-size: 16px; vertical-align: middle; cursor: pointer;" 
-                                onclick="copyToClipboard('${api.requestUrl}', this)">content_copy</span>
+                                onclick="copyToClipboard('${
+                                  api.requestUrl
+                                }', this)">content_copy</span>
                         </span>
                     </div>
                     <div class="detail-row">
                         <span class="material-icons detail-icon">code</span>
                         <span class="detail-label">Method:</span>
-                        <span class="method-badge method-${api.requestMethod.toLowerCase()}">${api.requestMethod}</span>
+                        <span class="method-badge method-${api.requestMethod.toLowerCase()}">${
+              api.requestMethod
+            }</span>
                     </div>
                     <div class="detail-row">
                         <span class="material-icons detail-icon">info</span>
                         <span class="detail-label">Status:</span>
-                        <span class="status-badge ${api.statusCode.startsWith('2') ? 'status-success' : 'status-error'}">${api.statusCode}</span>
+                        <span class="status-badge ${
+                          api.statusCode.startsWith("2")
+                            ? "status-success"
+                            : "status-error"
+                        }">${api.statusCode}</span>
                     </div>
                 </div>
             </div>
-        `).join('');
-    }
+        `
+          )
+          .join("");
+      }
 
-    function showError(message) {
-        const loading = document.getElementById('loading');
-        const errorContainer = document.getElementById('errorContainer');
-        
-        loading.style.display = 'none';
-        errorContainer.style.display = 'block';
+      function showError(message) {
+        const loading = document.getElementById("loading");
+        const errorContainer = document.getElementById("errorContainer");
+
+        loading.style.display = "none";
+        errorContainer.style.display = "block";
         errorContainer.innerHTML = `<div class="error-message">${message}</div>`;
-    }
+      }
 
-    async function copyToClipboard(url, iconElement) {
+      async function copyToClipboard(url, iconElement) {
         try {
-            await navigator.clipboard.writeText(url);
+          await navigator.clipboard.writeText(url);
         } catch (err) {
-            console.error('Failed to copy: ', err);
-            // Fallback
-            const textArea = document.createElement('textarea');
-            textArea.value = url;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
+          console.error("Failed to copy: ", err);
+          // Fallback
+          const textArea = document.createElement("textarea");
+          textArea.value = url;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textArea);
         }
-        
+
         // Change icon to tick
-        iconElement.textContent = 'check';
-        iconElement.style.color = '#48bb78';
-        iconElement.style.transition = 'all 0.3s ease';
+        iconElement.textContent = "check";
+        iconElement.style.color = "#48bb78";
+        iconElement.style.transition = "all 0.3s ease";
 
         // Revert back to copy icon after 2 seconds
         setTimeout(() => {
-            iconElement.textContent = 'content_copy';
-            iconElement.style.color = '';
+          iconElement.textContent = "content_copy";
+          iconElement.style.color = "";
         }, 2000);
-    }
+      }
 
-    // Load data when page loads
-    document.addEventListener('DOMContentLoaded', loadAPIData);
-</script>
-
-</body>
+      // Load data when page loads
+      document.addEventListener("DOMContentLoaded", loadAPIData);
+    </script>
+  </body>
 </html>
