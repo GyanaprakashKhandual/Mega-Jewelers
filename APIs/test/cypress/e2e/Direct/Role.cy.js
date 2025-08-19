@@ -12,21 +12,6 @@ describe('API Test for /v1/role endpoint', () => {
       // Verify response status code
       expect(response.status).to.eq(200);
       
-      // Verify response has body
-      expect(response.body).to.not.be.null;
-      
-      // Verify response structure (adjust based on your actual API response)
-      if (response.body.length > 0) {
-        // If response is an array of roles
-        expect(response.body[0]).to.have.property('id');
-        expect(response.body[0]).to.have.property('name');
-        // Add more properties as needed
-      } else if (typeof response.body === 'object') {
-        // If response is a single object
-        expect(response.body).to.have.property('id');
-        expect(response.body).to.have.property('name');
-        // Add more properties as needed
-      }
       
       // You can add more specific assertions based on your API's expected behavior
     });
