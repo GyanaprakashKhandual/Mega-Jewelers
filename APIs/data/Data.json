@@ -1,0 +1,72 @@
+{
+    {
+  "apiName": "Role",
+  "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
+  "requestMethod": "GET",
+  "statusCode": "200 OK",
+  "Total Test Case": "7",
+  "Passed Test Case": "3",
+  "Failed Test Case": "4",
+  "bugs": [
+    {
+      "Test Description": "Call API with an invalid token",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add authentication token to protect the routes"
+    },
+    {
+      "Test Description": "Call API with no token",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add authentication token to protect the routes"
+    },
+    {
+      "Test Description": "Call API with empty Authorization header",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add authentication token validation for empty headers"
+    },
+    {
+      "Test Description": "Call API with unsupported content type",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add content-type validation to authentication middleware"
+    }
+  ]
+},
+{
+  "apiName": "Role",
+  "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
+  "requestMethod": "GET",
+  "statusCode": "200 OK",
+  "Total Test Case": "7",
+  "Passed Test Case": "3",
+  "Failed Test Case": "4",
+  "bugs": [
+    {
+      "Test Description": "Call API with an invalid token",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add authentication token to protect the routes"
+    },
+    {
+      "Test Description": "Call API with no token",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add authentication token to protect the routes"
+    },
+    {
+      "Test Description": "Call API with empty Authorization header",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add authentication token validation for empty headers"
+    },
+    {
+      "Test Description": "Call API with unsupported content type",
+      "Expected Result": "Status code 401 Unauthorized",
+      "Actual Result": "Status code 200 passed",
+      "Requirement": "Add content-type validation to authentication middleware"
+    }
+  ]
+}
+}
