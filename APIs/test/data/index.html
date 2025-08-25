@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Testing Dashboard</title>
+    <title>API Testing Dashboard of Mega Jewelers</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
-        /* Chrome/Edge/Safari */
-::-webkit-scrollbar-button {
-  display: none; /* hides arrow buttons */
-}
+                /* Chrome/Edge/Safari */
+        ::-webkit-scrollbar-button {
+        display: none; /* hides arrow buttons */
+        }
 
-/* Optional: keep rest of scrollbar visible */
-::-webkit-scrollbar {
-  width: 6px; /* set scrollbar width */
-}
+       /* Optional: keep rest of scrollbar visible */
+        ::-webkit-scrollbar {
+            width: 6px; /* set scrollbar width */
+        }
 
-::-webkit-scrollbar-thumb {
-  background-color: #888;
-}
+        ::-webkit-scrollbar-thumb {
+            background-color: #888;
+        }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
-}
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
         .card-enter {
             opacity: 0;
             transform: translateY(20px);
@@ -133,7 +133,7 @@
                 <!-- Brand -->
                 <div class="flex items-center space-x-3">
                     <span class="material-icons text-blue-600 text-3xl">diamond</span>
-                    <h1 class="text-2xl font-bold text-gray-800">Meaga Jwelere</h1>
+                    <h1 class="text-2xl font-bold text-gray-800">Mega Jewelers</h1>
                 </div>
                 
                 <!-- Search and Filters -->
@@ -185,7 +185,7 @@
             </div>
             
             <!-- Active Filters -->
-            <div id="activeFilters" class="mt-3 flex flex-wrap gap-2 hidden">
+            <div id="activeFilters" class="mt-3 flex flex-wrap gap-2">
                 <!-- Active filter badges will appear here -->
             </div>
         </div>
@@ -204,11 +204,11 @@
         </div>
 
         <!-- API Cards Container -->
-        <div id="api-cards" class="grid grid-cols-1 lg:grid-cols-2 gap-6 hidden p-2">
+        <div id="api-cards" class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-2">
         </div>
         
         <!-- Pagination -->
-        <div id="pagination" class="hidden flex items-center justify-between mt-8 p-2">
+        <div id="pagination" class="flex items-center justify-between mt-8 p-2">
             <div class="flex items-center space-x-2">
                 <span class="text-sm text-gray-600">Showing</span>
                 <span id="pageInfo" class="text-sm font-medium text-gray-900">1-2 of 4</span>
