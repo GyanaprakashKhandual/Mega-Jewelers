@@ -1,72 +1,66 @@
-{
-    {
-  "apiName": "Role",
-  "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
-  "requestMethod": "GET",
-  "statusCode": "200 OK",
-  "Total Test Case": "7",
-  "Passed Test Case": "3",
-  "Failed Test Case": "4",
-  "bugs": [
-    {
-      "Test Description": "Call API with an invalid token",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add authentication token to protect the routes"
-    },
-    {
-      "Test Description": "Call API with no token",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add authentication token to protect the routes"
-    },
-    {
-      "Test Description": "Call API with empty Authorization header",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add authentication token validation for empty headers"
-    },
-    {
-      "Test Description": "Call API with unsupported content type",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add content-type validation to authentication middleware"
-    }
-  ]
-},
-{
-  "apiName": "Role",
-  "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
-  "requestMethod": "GET",
-  "statusCode": "200 OK",
-  "Total Test Case": "7",
-  "Passed Test Case": "3",
-  "Failed Test Case": "4",
-  "bugs": [
-    {
-      "Test Description": "Call API with an invalid token",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add authentication token to protect the routes"
-    },
-    {
-      "Test Description": "Call API with no token",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add authentication token to protect the routes"
-    },
-    {
-      "Test Description": "Call API with empty Authorization header",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add authentication token validation for empty headers"
-    },
-    {
-      "Test Description": "Call API with unsupported content type",
-      "Expected Result": "Status code 401 Unauthorized",
-      "Actual Result": "Status code 200 passed",
-      "Requirement": "Add content-type validation to authentication middleware"
-    }
-  ]
-}
-}
+[
+  {
+    "apiName": "Role",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/role",
+    "requestMethod": "GET",
+    "statusCode": "200 OK",
+    "Total Test Case": "7",
+    "Passed Test Case": "3",
+    "Failed Test Case": "4",
+    "bugs": [
+      {
+        "Test Description": "Call API with an invalid token",
+        "Expected Result": "Status code 401 Unauthorized",
+        "Actual Result": "Status code 200 passed",
+        "Requirement": "Add authentication token to protect the routes"
+      },
+      {
+        "Test Description": "Call API with no token",
+        "Expected Result": "Status code 401 Unauthorized",
+        "Actual Result": "Status code 200 passed",
+        "Requirement": "Add authentication token to protect the routes"
+      },
+      {
+        "Test Description": "Call API with empty Authorization header",
+        "Expected Result": "Status code 401 Unauthorized",
+        "Actual Result": "Status code 200 passed",
+        "Requirement": "Add authentication token validation for empty headers"
+      },
+      {
+        "Test Description": "Call API with unsupported content type",
+        "Expected Result": "Status code 401 Unauthorized",
+        "Actual Result": "Status code 200 passed",
+        "Requirement": "Add content-type validation to authentication middleware"
+      }
+    ]
+  },
+  {
+    "apiName": "Product Categories",
+    "requestUrl": "https://pxxxinvsvu.us-east-1.awsapprunner.com/v1/product-categories",
+    "requestMethod": "POST",
+    "statusCode": "201 Created",
+    "Total Test Case": "8",
+    "Passed Test Case": "5",
+    "Failed Test Case": "3",
+    "bugs": [
+      {
+        "Test Description": "Try adding a product category that already exists",
+        "Expected Result": "Status code 409 avoid duplicate entries",
+        "Actual Result": "Status code 500 Internal server error",
+        "Requirement": "Add Database duplicate entry caching functionality"
+      },
+      {
+        "Test Description": "Add Product category with very long name",
+        "Expected Result": "Should throw a validation error",
+        "Actual Result": "Status code 500 internal server error",
+        "Requirement": "Add Proper handling for this type of case"
+      },
+      {
+        "Test Description": "Add product category with special characters",
+        "Expected Result": "Should throw a validation error",
+        "Actual Result": "Status code 500 internal server error",
+        "Requirement": "Add Proper handling for this type of case"
+      }
+    ]
+  }
+]
