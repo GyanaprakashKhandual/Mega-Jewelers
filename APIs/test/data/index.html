@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Testing Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* Chrome/Edge/Safari */
+::-webkit-scrollbar-button {
+  display: none; /* hides arrow buttons */
+}
+
+/* Optional: keep rest of scrollbar visible */
+::-webkit-scrollbar {
+  width: 6px; /* set scrollbar width */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+        .card-enter {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .card-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .bug-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        .bug-details.expanded {
+            max-height: 800px;
+            opacity: 1;
+        }
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+        .arrow-transition {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Custom animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Hover animations */
+        .card-hover {
+            transition: transform 0.2s ease,
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Copy button animations */
+        .copy-transition {
+            transition: all 0.2s ease;
+        }
+        
+        .copy-success {
+            color: #10b981;
+            transform: scale(1.1);
+        }
+
+        /* Dropdown animations */
+        .dropdown-enter {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        
+        .dropdown-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        /* Search input focus effect */
+        .search-focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Filter badge */
+        .filter-badge {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Pagination button hover */
+        .page-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Navigation Bar -->
+    <nav class="bg-white border-b mb-1">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Brand -->
+                <div class="flex items-center space-x-3">
+                    <span class="material-icons text-blue-600 text-3xl">diamond</span>
+                    <h1 class="text-2xl font-bold text-gray-800">Meaga Jwelere</h1>
+                </div>
+                
+                <!-- Search and Filters -->
+                <div class="flex items-center space-x-4 flex-1 max-w-2xl mx-8">
+                    <!-- Search Bar -->
+                    <div class="relative flex-1">
+                        <span class="material-icons absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">search</span>
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Search APIs..." 
+                            class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 search-focus"
+                        >
+                    </div>
+                    
+                    <!-- Filter Dropdown -->
+                    <div class="relative">
+                        <button 
+                            id="filterButton"
+                            class="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <span class="material-icons text-gray-500">filter_list</span>
+                            <span id="filterText">All Methods</span>
+                            <span class="material-icons text-gray-400 arrow-transition" id="filterArrow">keyboard_arrow_down</span>
+                        </button>
+                        
+                        <div id="filterDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50 dropdown-enter">
+                            <div class="py-2">
+                                <div class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wide">Filter by Method</div>
+                                <div id="filterOptions" class="mt-1">
+                                    <!-- Dynamic options will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="flex items-center space-x-4 text-sm">
+                    <div class="text-center">
+                        <div class="font-bold text-blue-600" id="totalAPIs">0</div>
+                        <div class="text-gray-500">APIs</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="font-bold text-red-600" id="totalBugs">0</div>
+                        <div class="text-gray-500">Bugs</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Filters -->
+            <div id="activeFilters" class="mt-3 flex flex-wrap gap-2 hidden">
+                <!-- Active filter badges will appear here -->
+            </div>
+        </div>
+    </nav>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p class="mt-4 text-gray-600">Loading API data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <span class="material-icons align-middle mr-2">error</span>
+            <span id="error-message">Failed to load data</span>
+        </div>
+
+        <!-- API Cards Container -->
+        <div id="api-cards" class="grid grid-cols-1 lg:grid-cols-2 gap-6 hidden p-2">
+        </div>
+        
+        <!-- Pagination -->
+        <div id="pagination" class="hidden flex items-center justify-between mt-8 p-2">
+            <div class="flex items-center space-x-2">
+                <span class="text-sm text-gray-600">Showing</span>
+                <span id="pageInfo" class="text-sm font-medium text-gray-900">1-2 of 4</span>
+                <span class="text-sm text-gray-600">APIs</span>
+            </div>
+            
+            <div class="flex space-x-2">
+                <button 
+                    id="prevBtn"
+                    class="page-btn flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200"
+                >
+                    <span class="material-icons text-sm mr-1">chevron_left</span>
+                    Previous
+                </button>
+                
+                <button 
+                    id="nextBtn"
+                    class="page-btn flex items-center px-4 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200"
+                >
+                    Next
+                    <span class="material-icons text-sm ml-1">chevron_right</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class APITestingDashboard {
+            constructor() {
+                this.data = [];
+                this.filteredData = [];
+                this.currentPage = 1;
+                this.itemsPerPage = 2;
+                this.currentFilter = 'all';
+                this.searchTerm = '';
+                this.init();
+            }
+
+            async init() {
+                try {
+                    await this.loadData();
+                    this.setupEventListeners();
+                    this.updateFilterOptions();
+                    this.updateStats();
+                    this.applyFilters();
+                    this.hideLoading();
+                } catch (error) {
+                    this.showError(error.message);
+                }
+            }
+
+            async loadData() {
+                try {
+                    // Fetch data from the API endpoint
+                    const response = await fetch('https://avidus-interactive-test-data.onrender.com/api/mj-api');
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    const apiData = await response.json();
+                    
+                    // Check if the response has the expected structure
+                    if (Array.isArray(apiData)) {
+                        this.data = apiData;
+                    } else {
+                        // If the API returns an object with the data in a property
+                        // Try to find the array in common properties
+                        const possibleDataKeys = ['data', 'apis', 'results', 'items'];
+                        let foundData = null;
+                        
+                        for (const key of possibleDataKeys) {
+                            if (apiData[key] && Array.isArray(apiData[key])) {
+                                foundData = apiData[key];
+                                break;
+                            }
+                        }
+                        
+                        if (foundData) {
+                            this.data = foundData;
+                        } else {
+                            // If we can't find an array, use the response as a single item array
+                            this.data = [apiData];
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    throw new Error('Failed to load API data. Please check your connection and try again.');
+                }
+            }
+
+            setupEventListeners() {
+                // Search functionality
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    this.searchTerm = e.target.value.toLowerCase();
+                    this.currentPage = 1;
+                    this.applyFilters();
+                });
+
+                // Filter dropdown
+                document.getElementById('filterButton').addEventListener('click', () => {
+                    this.toggleFilterDropdown();
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', (e) => {
+                    const dropdown = document.getElementById('filterDropdown');
+                    const button = document.getElementById('filterButton');
+                    if (dropdown && button && !dropdown.contains(e.target) && !button.contains(e.target)) {
+                        dropdown.classList.add('hidden');
+                        document.getElementById('filterArrow').classList.remove('rotate-180');
+                    }
+                });
+
+                // Pagination
+                document.getElementById('prevBtn').addEventListener('click', () => {
+                    if (this.currentPage > 1) {
+                        this.currentPage--;
+                        this.renderCards();
+                        this.updatePagination();
+                    }
+                });
+
+                document.getElementById('nextBtn').addEventListener('click', () => {
+                    const maxPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+                    if (this.currentPage < maxPages) {
+                        this.currentPage++;
+                        this.renderCards();
+                        this.updatePagination();
+                    }
+                });
+            }
+
+            toggleFilterDropdown() {
+                const dropdown = document.getElementById('filterDropdown');
+                const arrow = document.getElementById('filterArrow');
+                
+                if (dropdown && arrow) {
+                    dropdown.classList.toggle('hidden');
+                    arrow.classList.toggle('rotate-180');
+                    
+                    if (!dropdown.classList.contains('hidden')) {
+                        dropdown.classList.add('dropdown-enter-active');
+                    }
+                }
+            }
+
+            updateFilterOptions() {
+                const methods = [...new Set(this.data.map(api => api.requestMethod))];
+                const filterOptions = document.getElementById('filterOptions');
+                
+                if (!filterOptions) return;
+                
+                let optionsHTML = `
+                    <button class="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm ${this.currentFilter === 'all' ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}" onclick="dashboard.setFilter('all')">
+                        <span class="material-icons text-sm mr-2 align-middle">api</span>All Methods
+                    </button>
+                `;
+                
+                methods.forEach(method => {
+                    const isActive = this.currentFilter === method;
+                    optionsHTML += `
+                        <button class="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm ${isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700'}" onclick="dashboard.setFilter('${method}')">
+                            <span class="material-icons text-sm mr-2 align-middle">${this.getMethodIcon(method)}</span>${method}
+                        </button>
+                    `;
+                });
+                
+                filterOptions.innerHTML = optionsHTML;
+            }
+
+            setFilter(filter) {
+                this.currentFilter = filter;
+                this.currentPage = 1;
+                const filterText = document.getElementById('filterText');
+                if (filterText) {
+                    filterText.textContent = filter === 'all' ? 'All Methods' : filter;
+                }
+                this.updateFilterOptions();
+                this.applyFilters();
+                this.toggleFilterDropdown();
+                this.updateActiveFilters();
+            }
+
+            updateActiveFilters() {
+                const activeFilters = document.getElementById('activeFilters');
+                if (!activeFilters) return;
+                
+                let hasFilters = false;
+                let filtersHTML = '';
+
+                if (this.currentFilter !== 'all') {
+                    hasFilters = true;
+                    filtersHTML += `
+                        <span class="filter-badge inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                            ${this.currentFilter}
+                            <button class="ml-2 hover:text-blue-600" onclick="dashboard.removeFilter('method')">
+                                <span class="material-icons text-sm">close</span>
+                            </button>
+                        </span>
+                    `;
+                }
+
+                if (this.searchTerm) {
+                    hasFilters = true;
+                    filtersHTML += `
+                        <span class="filter-badge inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                            "${this.searchTerm}"
+                            <button class="ml-2 hover:text-green-600" onclick="dashboard.removeFilter('search')">
+                                <span class="material-icons text-sm">close</span>
+                            </button>
+                        </span>
+                    `;
+                }
+
+                if (hasFilters) {
+                    activeFilters.innerHTML = filtersHTML;
+                    activeFilters.classList.remove('hidden');
+                } else {
+                    activeFilters.classList.add('hidden');
+                }
+            }
+
+            removeFilter(type) {
+                if (type === 'method') {
+                    this.setFilter('all');
+                } else if (type === 'search') {
+                    const searchInput = document.getElementById('searchInput');
+                    if (searchInput) {
+                        searchInput.value = '';
+                    }
+                    this.searchTerm = '';
+                    this.currentPage = 1;
+                    this.applyFilters();
+                }
+            }
+
+            applyFilters() {
+                this.filteredData = this.data.filter(api => {
+                    const matchesSearch = !this.searchTerm || 
+                        api.apiName.toLowerCase().includes(this.searchTerm) ||
+                        api.requestUrl.toLowerCase().includes(this.searchTerm);
+                    
+                    const matchesFilter = this.currentFilter === 'all' || 
+                        api.requestMethod === this.currentFilter;
+                    
+                    return matchesSearch && matchesFilter;
+                });
+                
+                this.renderCards();
+                this.updatePagination();
+                this.updateActiveFilters();
+            }
+
+            updateStats() {
+                const totalBugs = this.data.reduce((sum, api) => sum + api.bugs.length, 0);
+                const totalAPIs = document.getElementById('totalAPIs');
+                const totalBugsEl = document.getElementById('totalBugs');
+                
+                if (totalAPIs) totalAPIs.textContent = this.data.length;
+                if (totalBugsEl) totalBugsEl.textContent = totalBugs;
+            }
+
+            updatePagination() {
+                const maxPages = Math.ceil(this.filteredData.length / this.itemsPerPage);
+                const startItem = (this.currentPage - 1) * this.itemsPerPage + 1;
+                const endItem = Math.min(this.currentPage * this.itemsPerPage, this.filteredData.length);
+                
+                const pageInfo = document.getElementById('pageInfo');
+                if (pageInfo) {
+                    pageInfo.textContent = `${startItem}-${endItem} of ${this.filteredData.length}`;
+                }
+                
+                const prevBtn = document.getElementById('prevBtn');
+                const nextBtn = document.getElementById('nextBtn');
+                const pagination = document.getElementById('pagination');
+                
+                if (prevBtn) prevBtn.disabled = this.currentPage === 1;
+                if (nextBtn) nextBtn.disabled = this.currentPage === maxPages || this.filteredData.length === 0;
+                
+                if (pagination) {
+                    if (this.filteredData.length <= this.itemsPerPage) {
+                        pagination.classList.add('hidden');
+                    } else {
+                        pagination.classList.remove('hidden');
+                    }
+                }
+            }
+
+            renderCards() {
+                const container = document.getElementById('api-cards');
+                if (!container) return;
+                
+                container.innerHTML = '';
+
+                const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+                const endIndex = startIndex + this.itemsPerPage;
+                const pageData = this.filteredData.slice(startIndex, endIndex);
+
+                if (pageData.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-2 text-center py-12">
+                            <span class="material-icons text-6xl text-gray-300 mb-4">search_off</span>
+                            <p class="text-xl text-gray-500 mb-2">No APIs found</p>
+                            <p class="text-gray-400">Try adjusting your search or filter criteria</p>
+                        </div>
+                    `;
+                    container.classList.remove('hidden');
+                    return;
+                }
+
+                pageData.forEach((api, index) => {
+                    const card = this.createApiCard(api, startIndex + index);
+                    container.appendChild(card);
+                    
+                    // Add entrance animation
+                    setTimeout(() => {
+                        card.classList.add('card-enter-active');
+                    }, index * 100);
+                });
+
+                container.classList.remove('hidden');
+            }
+
+            createApiCard(api, index) {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl  card-hover overflow-hidden card-enter';
+
+                const passedPercentage = (parseInt(api["Passed Test Case"]) / parseInt(api["Total Test Case"]) * 100).toFixed(1);
+                const failedCount = parseInt(api["Failed Test Case"]);
+
+                card.innerHTML = `
+                    <!-- Card Header -->
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <span class="material-icons text-3xl mr-3">api</span>
+                                <h2 class="text-2xl font-bold">${api.apiName}</h2>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-sm mr-1">${this.getMethodIcon(api.requestMethod)}</span>
+                                <span class="text-sm font-semibold">${api.requestMethod}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-6">
+                        <!-- API Details -->
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center flex-1 mr-3">
+                                    <span class="material-icons text-gray-500 mr-3">link</span>
+                                    <span class="text-sm text-gray-600 break-all">${api.requestUrl}</span>
+                                </div>
+                                <button 
+                                    class="copy-transition p-1 hover:bg-gray-100 rounded" 
+                                    onclick="copyToClipboard('${api.requestUrl}', ${index})"
+                                    title="Copy URL"
+                                >
+                                    <span class="material-icons text-gray-400 text-lg" id="copy-icon-${index}">content_copy</span>
+                                </button>
+                            </div>
+                            <div class="flex items-center">
+                                <span class="material-icons text-gray-500 mr-3">info</span>
+                                <span class="text-sm font-medium ${this.getStatusColor(api.statusCode)}">${api.statusCode}</span>
+                            </div>
+                        </div>
+
+                        <!-- Test Results Summary -->
+                        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                            <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                <span class="material-icons mr-2">assessment</span>
+                                Test Results
+                            </h3>
+                            <div class="grid grid-cols-3 gap-4 text-center">
+                                <div class="bg-white p-3 rounded-lg">
+                                    <div class="text-2xl font-bold text-blue-600">${api["Total Test Case"]}</div>
+                                    <div class="text-xs text-gray-600">Total</div>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg">
+                                    <div class="text-2xl font-bold text-green-600">${api["Passed Test Case"]}</div>
+                                    <div class="text-xs text-gray-600">Passed</div>
+                                </div>
+                                <div class="bg-white p-3 rounded-lg">
+                                    <div class="text-2xl font-bold text-red-600">${api["Failed Test Case"]}</div>
+                                    <div class="text-xs text-gray-600">Failed</div>
+                                </div>
+                            </div>
+                            
+                            <!-- Progress Bar -->
+                            <div class="mt-4">
+                                <div class="flex justify-between text-sm text-gray-600 mb-1">
+                                    <span>Success Rate</span>
+                                    <span>${passedPercentage}%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full transition-all duration-500" style="width: ${passedPercentage}%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bugs Section -->
+                        ${failedCount > 0 ? `
+                            <div class="border-t pt-4">
+                                <button class="flex items-center justify-between w-full text-left focus:outline-none group" onclick="toggleBugs(${index})">
+                                    <h3 class="font-semibold text-red-600 flex items-center">
+                                        <span class="material-icons mr-2">bug_report</span>
+                                        Failed Test Cases (${failedCount})
+                                    </h3>
+                                    <span class="material-icons text-gray-400 arrow-transition" id="arrow-${index}">keyboard_arrow_down</span>
+                                </button>
+                                
+                                <div class="bug-details mt-4" id="bugs-${index}">
+                                    <div class="space-y-3">
+                                        ${api.bugs.map((bug, bugIndex) => `
+                                            <div class="bg-red-50 border border-red-200 rounded-lg p-4 slide-in">
+                                                <div class="font-medium text-red-800 mb-2 flex items-start">
+                                                    <span class="material-icons text-sm mr-2 mt-0.5">error</span>
+                                                    ${bug["Test Description"]}
+                                                </div>
+                                                <div class="text-sm space-y-2 ml-6">
+                                                    <div>
+                                                        <span class="font-semibold text-gray-700">Expected:</span>
+                                                        <span class="text-gray-600">${bug["Expected Result"]}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="font-semibold text-gray-700">Actual:</span>
+                                                        <span class="text-gray-600">${bug["Actual Result"]}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="font-semibold text-gray-700">Requirement:</span>
+                                                        <span class="text-gray-600">${bug["Requirement"]}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        ` : `
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
+                                <span class="material-icons text-green-600 text-3xl">check_circle</span>
+                                <p class="text-green-800 font-medium mt-2">All tests passed successfully!</p>
+                            </div>
+                        `}
+                    </div>
+                `;
+
+                return card;
+            }
+
+            getMethodIcon(method) {
+                const icons = {
+                    'GET': 'download',
+                    'POST': 'upload',
+                    'PUT': 'edit',
+                    'DELETE': 'delete',
+                    'PATCH': 'build'
+                };
+                return icons[method] || 'api';
+            }
+
+            getStatusColor(statusCode) {
+                if (statusCode.startsWith('2')) return 'text-green-600';
+                if (statusCode.startsWith('3')) return 'text-yellow-600';
+                if (statusCode.startsWith('4') || statusCode.startsWith('5')) return 'text-red-600';
+                return 'text-gray-600';
+            }
+
+            hideLoading() {
+                const loading = document.getElementById('loading');
+                if (loading) loading.classList.add('hidden');
+            }
+
+            showError(message) {
+                const loading = document.getElementById('loading');
+                const error = document.getElementById('error');
+                const errorMessage = document.getElementById('error-message');
+                
+                if (loading) loading.classList.add('hidden');
+                if (errorMessage) errorMessage.textContent = message;
+                if (error) error.classList.remove('hidden');
+            }
+        }
+
+        // Global functions
+        window.toggleBugs = function(index) {
+            const bugsElement = document.getElementById(`bugs-${index}`);
+            const arrowElement = document.getElementById(`arrow-${index}`);
+            
+            if (bugsElement && arrowElement) {
+                if (bugsElement.classList.contains('expanded')) {
+                    bugsElement.classList.remove('expanded');
+                    arrowElement.classList.remove('rotate-180');
+                } else {
+                    bugsElement.classList.add('expanded');
+                    arrowElement.classList.add('rotate-180');
+                }
+            }
+        };
+
+        window.copyToClipboard = async function(text, index) {
+            try {
+                await navigator.clipboard.writeText(text);
+                const icon = document.getElementById(`copy-icon-${index}`);
+                if (!icon) return;
+                
+                const originalIcon = icon.textContent;
+                
+                // Show success state
+                icon.textContent = 'check';
+                icon.classList.add('copy-success');
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    icon.textContent = originalIcon;
+                    icon.classList.remove('copy-success');
+                }, 2000);
+                
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const icon = document.getElementById(`copy-icon-${index}`);
+                if (!icon) return;
+                
+                icon.textContent = 'check';
+                icon.classList.add('copy-success');
+                
+                setTimeout(() => {
+                    icon.textContent = 'content_copy';
+                    icon.classList.remove('copy-success');
+                }, 2000);
+            }
+        };
+
+        // Global dashboard instance
+        let dashboard;
+
+        // Initialize the dashboard when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            dashboard = new APITestingDashboard();
+        });
+    </script>
+</body>
+</html>
